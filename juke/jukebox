@@ -1,0 +1,18 @@
+#!/bin/bash
+
+PID=$(pidof juke)
+
+case $1 in
+	n) kill -s USR1 $PID >/dev/null 2>&1 ;;
+	r) kill -s USR2 $PID >/dev/null 2>&1 ;;
+	q) kill -s SIGQUIT $PID >/dev/null 2>&1 ;;
+	i) cat /proc/$(pidof mpv)/cmdline | sed \
+			-e 's|.*/music||' \
+			-e 's|/\([^/]*\)/\([^/]*\)/[^-]*-\([^.]*\).*|\1\n\2\n\3\n|' \
+			-e 's|_| |g'
+		;;
+	*)	kill -s SIGQUIT $PID >/dev/null 2>&1
+		exec setsid nohup juke $@ >/dev/null 2>&1 &
+		;;
+esac
+	
