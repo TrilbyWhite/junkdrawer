@@ -76,5 +76,5 @@ let GuideString = [
 \	]
 
 command -nargs=1 Rule execute 'normal i' . g:RuleString[<args>]
-command -nargs=1 Guide execute 'normal i' . g:RuleString[<args>]
+command -nargs=1 Guide execute 'normal i' . g:GuideString[<args>]
 
