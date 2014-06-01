@@ -1,7 +1,9 @@
 
 set tw=0
 
-let RuleBase = 'https://wiki.archlinux.org/index.php/Forum_Etiquette'
+let WikiBase = 'https://wiki.archlinux.org/'
+let RuleBase = WikiBase . 'index.php/Forum_Etiquette'
+let SearchIt = WikiBase . 'index.php?title=Special%3ASearch&search'
 let RuleSet = [
 \	[ [ "ettiquette", "rules" ],
 \		'[url=' . RuleBase . ']' .
@@ -14,6 +16,7 @@ let RuleSet = [
 \	[ [ "personal", "rant" ],
 \		'[url=' . RuleBase . '#Personal_Topics.2FRants' .
 \		'personal topics / rants' . '[/url]' ],
+\
 \	[ [ "ineffective", "bikeshed" ],
 \		'[url=' . RuleBase . '#Ineffective_Discussion_.28BIKESHED.29' .
 \		'ineffective discussion (bikeshed)' . '[/url]' ],
@@ -117,40 +120,44 @@ let RuleSet = [
 \
 \	[ [ "freedom" ],
 \		'[url=' . RuleBase . '#Freedom' .
-\		'freedom' . '[/url]' ]
-\	]
-let WikiString = 'https://wiki.archlinux.org/'
-let GuideString = [
-\	'[url=' . WikiString .'index.php?title=Special%3ASearch&search]' .
-\		'search the wiki' . '[/url]',
-\	'[url=' . WikiString .'index.php/Beginner%27s_Guide]' .
-\		"beginner's guide" . '[/url]',
-\	'[url=http://catb.org/~esr/faqs/smart-questions.html]' .
-\		'effective questions' . '[/url]',
-\	'[url=http://slash7.com/2006/12/22/vampires/]' .
-\		'help vampire' . '[/url]'
+\		'freedom' . '[/url]' ],
+\
+\	[ [ "search", "STFW" ],
+\		'[url=' . SearchIt . ']' .
+\		'search the wiki' . '[/url]' ],
+\
+\	[ [ "beginner's", "guide" ],
+\		'[url=' . WikiBase .'index.php/Beginner%27s_Guide]' .
+\		"beginner's guide" . '[/url]' ],
+\
+\	[ [ "questions", "ESR" ],
+\		'[url=http://catb.org/~esr/faqs/smart-questions.html]' .
+\		'effective questions' . '[/url]' ],
+\
+\	[ [ "vampire", "help", "slash7" ],
+\		'[url=http://slash7.com/2006/12/22/vampires/]' .
+\		'help vampire' . '[/url]' ]
 \	]
 
 
 function MatchRule(...)
-	let rule_num=-1
+	let rule_num=0
 	for rule in g:RuleSet
-		let rule_num=rule_num+1
 		let does_match=1
 		for word in a:000
-			if (match(rule[0], word) == -1)
+			if (match(rule[0], '\c' . word) == -1)
 				let does_match=0
 			endif
 		endfor
 		if (does_match == 1)
 			break
 		endif
+		let rule_num=rule_num+1
 	endfor
-	if (rule_num > -1)
+	if (rule_num < len(g:RuleSet))
 		execute 'normal i' . g:RuleSet[rule_num][1]
 	endif
 endfunction
 
 command -nargs=+ Rule call MatchRule(<f-args>)
-command -nargs=1 Guide execute 'normal i' . g:GuideString[<args>]
 
