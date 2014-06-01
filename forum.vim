@@ -5,9 +5,9 @@ let WikiBase = 'https://wiki.archlinux.org/'
 let RuleBase = WikiBase . 'index.php/Forum_Etiquette'
 let SearchIt = WikiBase . 'index.php?title=Special%3ASearch&search'
 let BBS_List = [
-\	[ [ "ettiquette", "rules" ],
+\	[ [ "etiquette", "rules" ],
 \		'[url=' . RuleBase . ']' .
-\		'forum ettiquette' . '[/url]' ],
+\		'forum etiquette' . '[/url]' ],
 \
 \	[ [ "introduction", "sense" ],
 \		'[url=' . RuleBase . '#Common_Sense_Introduction]' .
