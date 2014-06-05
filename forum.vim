@@ -136,7 +136,15 @@ let BBS_List = [
 \
 \	[ [ "vampire", "help", "slash7" ],
 \		'[url=http://slash7.com/2006/12/22/vampires/]' .
-\		'help vampire' . '[/url]' ]
+\		'help vampire' . '[/url]' ],
+\
+\	[ [ "tags" ],
+\		'[url=https://bbs.archlinux.org/help.php#bbcode]' .
+\		'code tags' . '[/url]' ],
+\
+\	[ [ "bbcode" ],
+\		'[url=https://bbs.archlinux.org/help.php#bbcode]' .
+\		'bbcode' . '[/url]' ],
 \	]
 
 
@@ -155,7 +163,7 @@ function MatchBBS(...)
 		let entry_num=entry_num+1
 	endfor
 	if (entry_num < len(g:BBS_List))
-		execute 'normal i' . g:BBS_List[entry_num][1]
+		execute 'normal a ' . g:BBS_List[entry_num][1]
 	endif
 endfunction
 
