@@ -30,7 +30,6 @@ static const char *BATT_STAT	= "/sys/class/power_supply/BAT0/status";
 static const char *MAIL_BASE	= "/home/jmcclure/mail/";
 static const char *MAIL_1		= "mccluresk9/INBOX/";
 static const char *MAIL_2		= "umass/INBOX/";
-static const char *REM_CMD		= "rem -naa -b1 | sort";
 
 /* icon names: may need to be adjusted to match your icon set */
 enum {
@@ -64,31 +63,10 @@ static int mailcheck(const char *accnt) {
 	return mail;
 }
 
-static int schedulecheck() {
-	FILE *in;
-	if ( !(in=popen(REM_CMD,"r")) ) return 0;
-	int y,m,d,hh=-1,mm;
-	time_t c,t = time(NULL);
-	struct tm *tmp = localtime(&t);
-	static char line[256];
-	while (fgets(line,255,in))
-		if (sscanf(line,"%d/%d/%d %d:%d",&y,&m,&d,&hh,&mm) == 5) break;
-	pclose(in);
-	tmp->tm_year=y-1900; tmp->tm_mon=m-1; tmp->tm_mday=d;
-	c = mktime(tmp);
-	if (c != t) return none; /* nothing left today */
-	tmp->tm_hour=hh; tmp->tm_min=mm;
-	c = mktime(tmp);
-	if (c < t + 1200) return clk2; /* next event within 20 minutes */
-	if (c < t + 7200) return clk1; /* next event within 2 hours */
-	return clk0; /* event later today */
-}
-
 int main(int argc, const char **argv) {
 	in = fopen(CPU_FILE,"r");
 	fscanf(in,"cpu %ld %ld %ld %ld",&j1,&j2,&j3,&j4);
 	fclose(in);
-	int clock = schedulecheck();
 	/* main loop */
 	for (;;) {
 		if ( (in=fopen(CPU_FILE,"r")) ) {       /* CPU MONITOR */
@@ -102,9 +80,9 @@ int main(int argc, const char **argv) {
 		}
 		if ( (in=fopen(MEM_FILE,"r")) ) {		/* MEM USAGE MONITOR */
 			fscanf(in,"MemTotal: %ld kB\nMemFree: %ld kB\n"
-					"Buffers: %ld kB\nCached: %ld kB\n", &ln1,&ln2,&ln3,&ln4);
+					"MemAvailable: %ld kB", &ln1,&ln2,&ln3);
 			fclose(in);
-			n = 100 - 100*(ln2+ln3+ln4)/ln1;
+			n = 100 - 100*ln3/ln1;
 			printf("{i%d}",(n/10)+mem0);
 		}
 		if ( (in=fopen(AUD_FILE,"r")) ) {       /* AUDIO VOLUME MONITOR */
@@ -142,7 +120,7 @@ int main(int argc, const char **argv) {
 			fclose(in);
 			if (n > 0) printf("{i%d}",(n/10)+wfi0);
 		}
-		if ((loops % 5) == 0)						/* MAIL */
+		if ((loops % 20) == 0)						/* MAIL */
 			mail = 2*mailcheck(MAIL_2) + mailcheck(MAIL_1);
 			if (mail == 1) printf("{{i%d} ",eml0);
 			else if (mail == 2) printf("{i%d} ",eml1);
@@ -152,10 +130,8 @@ int main(int argc, const char **argv) {
 			strftime(clk,6,"%H:%M",localtime(&current));
 		}
 		if (loops++ > 600) {
-			clock = schedulecheck();
 			loops = 0;
 		}
-		if (clock) printf(" {i%d}",clock);
 		printf(" %s &\n",clk);
 		fflush(stdout);
 		usleep(500000);
