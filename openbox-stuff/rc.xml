@@ -1,0 +1,70 @@
+<openbox_config xmlns="http://openbox.org/3.4/rc" xmlns:xi="http://www.w3.org/2001/XInclude">
+
+<theme><name>Onyx-Citrus</name><titleLayout>NLIMC</titleLayout>
+  <keepBorder>no</keepBorder><animateIconify>no</animateIconify>
+  <font place="ActiveWindow"><name>Droid Sans Mono</name><size>8</size><weight>bold</weight><slant>normal</slant></font>
+  <font place="InactiveWindow"><name>Droid Sans Mono</name><size>8</size><weight>bold</weight><slant>normal</slant></font>
+  <font place="MenuHeader"><name>Droid Sans Mono</name><size>9</size><weight>bold</weight><slant>normal</slant></font>
+  <font place="MenuItem"><name>Droid Sans Mono</name><size>9</size><weight>normal</weight><slant>normal</slant></font>
+  <font place="ActiveOnScreenDisplay"><name>Droid Sans Mono</name><size>9</size><weight>bold</weight><slant>normal</slant></font>
+  <font place="InactiveOnScreenDisplay"><name>Droid Sans Mono</name><size>9</size><weight>bold</weight><slant>normal</slant></font>
+</theme>
+
+<resize><drawContents>yes</drawContents><popupShow>Never</popupShow></resize>
+<margins><top>0</top><bottom>0</bottom><left>0</left><right>0</right></margins>
+<desktops><number>4</number><popupTime>0</popupTime></desktops>
+
+<keyboard>
+	<keybind key="W-1"><action name="GoToDesktop"><to>1</to></action></keybind>
+	<keybind key="W-2"><action name="GoToDesktop"><to>2</to></action></keybind>
+	<keybind key="W-3"><action name="GoToDesktop"><to>3</to></action></keybind>
+	<keybind key="W-4"><action name="GoToDesktop"><to>4</to></action></keybind>
+	<keybind key="W-S-1"><action name="SendToDesktop"><to>1</to></action></keybind>
+	<keybind key="W-S-2"><action name="SendToDesktop"><to>2</to></action></keybind>
+	<keybind key="W-S-3"><action name="SendToDesktop"><to>3</to></action></keybind>
+	<keybind key="W-S-4"><action name="SendToDesktop"><to>4</to></action></keybind>
+	<keybind key="A-F4"><action name="Close"/></keybind>
+	<keybind key="A-space"><action name="ShowMenu"><menu>client-menu</menu></action></keybind>
+	<keybind key="W-Tab"><action name="NextWindow"><dialog>none</dialog><linear>yes</linear><interactive>no</interactive></action></keybind>
+	<keybind key="A-Tab"><action name="GoToDesktop"><to>next</to></action></keybind>
+	<keybind key="W-space"><action name="ToggleMaximize"/><action name="ToggleDecorations"/></keybind>
+	<keybind key="W-f"><action name="ToggleFullscreen"/></keybind>
+	<keybind key="W-S-q"><action name="Exit"><prompt>no</prompt></action></keybind>
+	<keybind key="W-x"><action name="ToggleShowDesktop"/></keybind>
+	<keybind key="W-Return"><action name="Execute"><command>urxvtc</command></action></keybind>
+	<keybind key="W-w"><action name="Execute"><command>firefox</command></action></keybind>
+	<keybind key="Menu"><action name="Execute"><command>interrobang</command></action></keybind>
+	<keybind key="XF86AudioMute"><action name="Execute"><command>amixer set Master toggle</command></action></keybind>
+	<keybind key="XF86AudioLowerVolume"><action name="Execute"><command>amixer set Master 2-</command></action></keybind>
+	<keybind key="XF86AudioRaiseVolume"><action name="Execute"><command>amixer set Master 2+</command></action></keybind>
+	<keybind key="XF86ScreenSaver"><action name="Execute"><command>slock</command></action></keybind>
+</keyboard>
+
+<mouse>
+	<dragThreshold>1</dragThreshold>
+	<doubleClickTime>500</doubleClickTime>
+	<screenEdgeWarpTime>400</screenEdgeWarpTime>
+	<screenEdgeWarpMouse>false</screenEdgeWarpMouse>
+	<context name="Titlebar Top Right Bottom Left TLCorner TRCorner BRCorner BLCorner">
+		<mousebind button="Left" action="Press"><action name="Focus"/><action name="Raise"/></mousebind>
+		<mousebind button="Right" action="Drag"><action name="Resize"/></mousebind>
+		<mousebind button="Left" action="Drag"><action name="Move"/></mousebind>
+	</context>
+	<context name="Client"><mousebind button="Left" action="Press"><action name="Focus"/><action name="Raise"/></mousebind></context>
+	<context name="AllDesktops"><mousebind button="Left" action="Click"><action name="ToggleOmnipresent"/></mousebind></context>
+	<context name="Iconify"><mousebind button="Left" action="Click"><action name="Iconify"/></mousebind></context>
+	<context name="Maximize"><mousebind button="Left" action="Click"><action name="ToggleMaximize"/><action name="ToggleDecorations"/></mousebind></context>
+	<context name="Close"><mousebind button="Left" action="Click"><action name="Close"/></mousebind></context>
+</mouse>
+
+<applications>
+	<application class="*"><decor>no</decor><maximized>true</maximized></application>
+	<application name="Float"><decor>yes</decor><maximized>false</maximized></application>
+	<application class="notes"><decor>no</decor><maximized>false</maximized></application>
+	<application type="dialog"><decor>yes</decor><maximized>false</maximized></application>
+	<application class="Firefox"><desktop>2</desktop></application>
+	<application class="net-sf-jabref-JabRefMain"><desktop>4</desktop></application>
+</applications>
+
+</openbox_config>
+

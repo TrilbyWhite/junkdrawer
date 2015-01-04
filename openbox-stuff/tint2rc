@@ -1,0 +1,47 @@
+#tint2rc
+
+background_color = #202428 100
+strut_policy = follow_size
+taskbar_mode = single_desktop
+systray = 1
+urgent_nb_of_blink = 8
+tooltip = 0
+battery = 0
+
+panel_items=STBC
+panel_monitor = all
+panel_position = top center horizontal
+panel_size = 100% 18
+panel_padding = 4 0 4
+panel_layer = bottom
+
+systray_padding = 2 0 0
+systray_sort = ascending
+systray_icon_size = 16
+systray_icon_asb = 100 0 0
+
+task_icon = 1
+task_text = 1
+task_maximum_size = 2000 35
+task_padding = 0 2
+task_icon_asb = 60 -20 -20
+task_active_icon_asb = 80 0 0
+task_urgent_icon_asb = 100 0 0
+task_iconified_icon_asb = 60 -40 -40
+task_font = droid sans bold 10
+task_font_color = #9498A2 100
+task_active_font_color = #E0E0E0 100
+task_urgent_font_color = #FFDDOE 100
+task_iconified_font_color = #384246 100
+
+time1_format = %H:%M
+time1_font = droid sans bold 10
+clock_font_color = #E0E0E0
+clock_padding = 1 0
+
+mouse_middle = none
+mouse_right = none
+mouse_scroll_up = none
+mouse_scroll_down = none
+
+# End of config
