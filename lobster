@@ -12,8 +12,6 @@
 #%
 #############################################################################
 
-# NOTE: lines begining with #% are a form of 'literate programming'
-#       try `lobster -h` to see the formatted output
 
 #%    *Variables*
 #%      Default setting for the _bib_ _file_ can be adjusted by editing this script.
@@ -24,7 +22,7 @@ post_clean=1
 rscfile=/tmp/bibedit.rsc
 tmpfile=/tmp/bibedit.bib
 pdfreader=mupdf
-pdfpath=~/doc/pdfs/
+pdfpath=/home/jmcclure/doc/pdfs/
 browser=firefox
 viewpipe="highlight -O xterm256 -S bib -s xoria256"
 
@@ -208,23 +206,26 @@ function pretty() {
 
 function rsc() {
 cat <<EOF > $rscfile
-print.align					18
-print.align.key			22
+check.double            On
+check.double.delete     On
+print.align             18
+print.align.key         22
 print.align.string      18
-print.comma.at.end		On
-print.indent				3
-print.line.length			80
-print.newline				1
-print.terminal.comma		On
-print.use.tab				Off
-symbol.type             lower
-sort                    On
+print.comma.at.end      On
+print.deleted.entries   Off
+print.indent            3
+print.line.length       80
+print.newline           1
+print.terminal.comma    On
+print.use.tab           Off
 fmt.inter.name          ""
 fmt.et.al               ""
 key.number.separator    ""
 key.base                lower
 key.generation          On
 key.format              { %1p(author) %d(year) }
+sort                    On
+sort.format             { %p(author) _ %d(year) _ %0T(title) }
 sort.order              { * =
                           title      # author   # organization  # year   #
                           journal    # volume   # number        # issue  # pages  #
@@ -232,6 +233,7 @@ sort.order              { * =
                           publisher  # address  #
                           file       # url      # doi
                         }
+symbol.type             lower
 EOF
 }
 
